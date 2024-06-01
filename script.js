@@ -1,0 +1,211 @@
+const fromSelector=document.getElementById("from-currency-selector");
+let toSelector=document.getElementById("to-currency-selector");
+let convert_btn=document.getElementsByTagName("button")[0];
+console.log(convert_btn);
+
+console.log(fromSelector);
+console.log(toSelector);
+const currency_list = [
+    "AED",
+    "AFA",
+    "ALL",
+    "AMD",
+    "ANG",
+    "AOA",
+    "ARS",
+    "AUD",
+    "AWG",
+    "AZN",
+    "BAM",
+    "BBD",
+    "BDT",
+    "BEF",
+    "BGN",
+    "BHD",
+    "BIF",
+    "BMD",
+    "BND",
+    "BOB",
+    "BRL",
+    "BSD",
+    "BTC",
+    "BTN",
+    "BWP",
+    "BYR",
+    "BZD",
+    "CAD",
+    "CDF",
+    "CHF",
+    "CLF",
+    "CLP",
+    "CNY",
+    "COP",
+    "CRC",
+    "CUC",
+    "CVE",
+    "CZK",
+    "DEM",
+    "DJF",
+    "DKK",
+    "DOP",
+    "DZD",
+    "EEK",
+    "EGP",
+    "ERN",
+    "ETB",
+    "EUR",
+    "FJD",
+    "FKP",
+    "GBP",
+    "GEL",
+    "GHS",
+    "GIP",
+    "GMD",
+    "GNF",
+    "GRD",
+    "GTQ",
+    "GYD",
+    "HKD",
+    "HNL",
+    "HRK",
+    "HTG",
+    "HUF",
+    "IDR",
+    "ILS",
+    "INR",
+    "IQD",
+    "IRR",
+    "ISK",
+    "ITL",
+    "JMD",
+    "JOD",
+    "JPY",
+    "KES",
+    "KGS",
+    "KHR",
+    "KMF",
+    "KPW",
+    "KRW",
+    "KWD",
+    "KYD",
+    "KZT",
+    "LAK",
+    "LBP",
+    "LKR",
+    "LRD",
+    "LSL",
+    "LTC",
+    "LTL",
+    "LVL",
+    "LYD",
+    "MAD",
+    "MDL",
+    "MGA",
+    "MKD",
+    "MMK",
+    "MNT",
+    "MOP",
+    "MRO",
+    "MUR",
+    "MVR",
+    "MWK",
+    "MXN",
+    "MYR",
+    "MZM",
+    "NAD",
+    "NGN",
+    "NIO",
+    "NOK",
+    "NPR",
+    "NZD",
+    "OMR",
+    "PAB",
+    "PEN",
+    "PGK",
+    "PHP",
+    "PKR",
+    "PLN",
+    "PYG",
+    "QAR",
+    "RON",
+    "RSD",
+    "RUB",
+    "RWF",
+    "SAR",
+    "SBD",
+    "SCR",
+    "SDG",
+    "SEK",
+    "SGD",
+    "SHP",
+    "SKK",
+    "SLL",
+    "SOS",
+    "SRD",
+    "SSP",
+    "STD",
+    "SVC",
+    "SYP",
+    "SZL",
+    "THB",
+    "TJS",
+    "TMT",
+    "TND",
+    "TOP",
+    "TRY",
+    "TTD",
+    "TWD",
+    "TZS",
+    "UAH",
+    "UGX",
+    "USD",
+    "UYU",
+    "UZS",
+    "VEF",
+    "VND",
+    "VUV",
+    "WST",
+    "XAF",
+    "XCD",
+    "XDR",
+    "XOF",
+    "XPF",
+    "YER",
+    "ZAR",
+    "ZMK",
+    "ZWL"
+];
+currency_list.forEach((currency)=>{
+    let option=document.createElement("option");
+    option.value=currency;
+    option.innerText=currency;
+    fromSelector.add(option);
+})
+currency_list.forEach((currency)=>{
+    let option=document.createElement("option");
+    option.value=currency;
+    option.innerText=currency;
+    toSelector.add(option);
+})
+let api_key="6c24da4af4ce145c41ff0eff";
+let api_url="https://v6.exchangerate-api.com/v6/";
+function conversionHandler(){
+    let amount=document.getElementById("amount").value;
+    let base_currency=fromSelector.value;
+    let target_currency=toSelector.value;
+    if(amount!=0){
+        let api=api_url+api_key+"/pair/"+base_currency+"/"+target_currency+"/"+amount;
+        console.log(api);
+        let result;
+        fetch(api).then((resp)=>resp.json()).then((data)=>{
+            result=data.conversion_result;
+            console.log(result)
+            let text=document.getElementsByClassName("res-para")[0];
+            text.innerText=amount+" "+base_currency+" = "+result+" "+target_currency;
+        }) 
+    }
+    else{
+        alert("Enter amount");
+    }
+}
+convert_btn.addEventListener("click",conversionHandler);
